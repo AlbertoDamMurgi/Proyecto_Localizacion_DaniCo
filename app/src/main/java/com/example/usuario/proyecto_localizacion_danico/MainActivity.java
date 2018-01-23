@@ -96,7 +96,7 @@ public class MainActivity extends FragmentActivity implements
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplicationContext(),"Tienes que activar los permisos primero",Toast.LENGTH_LONG).show();
-            return;
+
         }
 
         myLocation = manejador.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -127,7 +127,7 @@ public class MainActivity extends FragmentActivity implements
             mapa = googleMap;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(),"Tienes que activar los permisos primero",Toast.LENGTH_LONG).show();
-                return;
+
             }
             mapa.setMyLocationEnabled(true);
             mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -143,19 +143,19 @@ public class MainActivity extends FragmentActivity implements
 
         if(myLocation==null) {
 
-            manejador.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,2000000,50,this);
+            manejador.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,1,this);
             myLocation=manejador.getLastKnownLocation(proveedor);
 
 
 
         }
-        manejador.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,2000000,50,this);
+        manejador.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,1,this);
         myLocation=manejador.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         miPosicion=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
-        //miPosicion=new LatLng(37.422,-122.084);
+
 
         CircleOptions co = new CircleOptions().center(miPosicion).radius(150).strokeColor(Color.RED).fillColor(Color.TRANSPARENT);
-        Log.d("ONMAPREADY","Estás en onMapReady");
+
         mapa.addCircle(co);
         for(int i=0;i<posiciones.size(); i++){
 
@@ -163,12 +163,12 @@ public class MainActivity extends FragmentActivity implements
                 if(results[0]<150){
                 mapa.addMarker(new MarkerOptions().position(posiciones.get(i).getCoordenadas()).title(posiciones.get(i).getNombre()));
             }
-            Log.d("Hola","Hola");
+
 
 
         }
 
-        //mapa.setOnMapClickListener(this);
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
