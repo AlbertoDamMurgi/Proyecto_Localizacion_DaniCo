@@ -87,6 +87,7 @@ public class MainActivity extends FragmentActivity implements
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSIONS_REQUEST_FINE_LOCATION);
 
+
         manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criterio = new Criteria();
         criterio.setCostAllowed(false);
@@ -113,7 +114,7 @@ public class MainActivity extends FragmentActivity implements
                 //añadimos las apis que nos interesan
                 .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
-                //donde se va a pintar la actividad
+                //esto permite que la actividad se gestione ella sola
                 .enableAutoManage(this, this)
                 .build();
 
@@ -130,7 +131,7 @@ public class MainActivity extends FragmentActivity implements
 
             }
             mapa.setMyLocationEnabled(true);
-            mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            mapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             mapa.addMarker(new MarkerOptions()
                     .position(Murgi)
                     .title("IES Murgi")
